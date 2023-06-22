@@ -12,7 +12,7 @@ import dagger.Component
     modules = [
         AppModule::class,
         CommonModule::class,
-        NetworkModule::class
+        NetworkModule::class,
     ]
 )
 interface AppComponent : CoreComponent {
