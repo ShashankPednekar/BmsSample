@@ -1,7 +1,9 @@
 package com.bookmyshow.network.provider
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
@@ -11,8 +13,11 @@ internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
         const val READ_TIMEOUT = 30L
     }
 
+    private val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
+
     private val okHttpClient: OkHttpClient
         get() = OkHttpClient.Builder()
+            .addInterceptor(logger)
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
@@ -24,6 +29,7 @@ internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(apiClass) as ApiClass
     }

@@ -1,8 +1,9 @@
 package com.bookmyshow.feature_one.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bookmyshow.feature_one.repository.ShowTimesRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -13,6 +14,8 @@ class FeatureOneViewModel @Inject constructor(
 ) : ViewModel() {
     private val TAG = "FeatureOneViewModel"
     fun test() {
-        Log.d(TAG, "test ")
+        viewModelScope.launch {
+            showTimesRepository.fetchShowDetails()
+        }
     }
 }
