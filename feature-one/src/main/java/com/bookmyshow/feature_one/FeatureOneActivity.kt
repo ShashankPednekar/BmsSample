@@ -10,15 +10,10 @@ import javax.inject.Inject
 
 class FeatureOneActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: FeatureOneViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FeatureOneDaggerProvider.component.inject(this)
         setContentView(R.layout.activity_feature_one)
-
-        viewModel.test()
     }
 }

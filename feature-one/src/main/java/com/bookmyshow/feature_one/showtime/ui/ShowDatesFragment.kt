@@ -1,16 +1,21 @@
 package com.bookmyshow.feature_one.showtime.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bookmyshow.feature_one.R
 import com.bookmyshow.feature_one.databinding.FragmentShowDatesBinding
+import com.bookmyshow.feature_one.di.FeatureOneDaggerProvider
 import com.bookmyshow.feature_one.other.viewBinding
 import com.bookmyshow.feature_one.showtime.adapter.ShowDateAdapter
 import com.bookmyshow.feature_one.showtime.adapter.ShowVenueAdapter
+import com.bookmyshow.feature_one.viewmodel.FeatureOneViewModel
+import javax.inject.Inject
 
 
 class ShowDatesFragment : Fragment() {
@@ -19,8 +24,13 @@ class ShowDatesFragment : Fragment() {
     private lateinit var showDateAdapter: ShowDateAdapter
     private lateinit var showVenueAdapter: ShowVenueAdapter
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: FeatureOneViewModel by viewModels { viewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FeatureOneDaggerProvider.component.injectShowDatesFragment(this)
     }
 
     override fun onCreateView(
@@ -35,6 +45,9 @@ class ShowDatesFragment : Fragment() {
 
         setShowDatesAdapter()
         setShowVenueAdapter()
+        observeViewModel()
+
+        viewModel.fetchShowDetails()
     }
 
     private fun setShowDatesAdapter() {
@@ -54,8 +67,13 @@ class ShowDatesFragment : Fragment() {
         binding.rvVenues.adapter = showVenueAdapter
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = ShowDatesFragment()
+    private fun observeViewModel() {
+        viewModel.allVenueItems.observe(viewLifecycleOwner) {
+            showDateAdapter.setData(it)
+        }
+
+        viewModel.selectedVenueItems.observe(viewLifecycleOwner) {
+            showVenueAdapter.setData(it)
+        }
     }
 }

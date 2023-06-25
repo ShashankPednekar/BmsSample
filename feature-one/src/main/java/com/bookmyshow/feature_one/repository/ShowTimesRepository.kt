@@ -2,6 +2,7 @@ package com.bookmyshow.feature_one.repository
 
 import android.util.Log
 import com.bookmyshow.core.NetworkProvider
+import com.bookmyshow.feature_one.data.ShowTimeResponse
 import javax.inject.Inject
 
 /**
@@ -18,8 +19,9 @@ class ShowTimesRepository @Inject constructor(
             baseUrl = "https://demo2782755.mockable.io"
         )
 
-    suspend fun fetchShowDetails() {
+    suspend fun fetchShowDetails(): ShowTimeResponse {
         val response = api.getShowTimes()
         Log.d(TAG, "fetchShowDetails: ${response.venues?.size}")
+        return response
     }
 }
