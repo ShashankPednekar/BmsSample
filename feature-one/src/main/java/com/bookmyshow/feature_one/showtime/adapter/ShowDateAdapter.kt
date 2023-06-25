@@ -22,7 +22,6 @@ class ShowDateAdapter(val listener: (VenuesItem) -> Unit) :
 
     override fun getItemCount() = venueList?.size ?: 0
 
-
     override fun onBindViewHolder(holder: ShowDateAdapterViewHolder, position: Int) {
         if (venueList != null) {
             holder.bindView(venueList?.get(position)!!)
@@ -34,7 +33,7 @@ class ShowDateAdapter(val listener: (VenuesItem) -> Unit) :
         notifyDataSetChanged()
     }
 
-    inner class ShowDateAdapterViewHolder(val binding: ItemShowDateBinding) :
+    inner class ShowDateAdapterViewHolder(private val binding: ItemShowDateBinding) :
         ViewHolder(binding.root) {
 
         fun bindView(venuesItem: VenuesItem) {

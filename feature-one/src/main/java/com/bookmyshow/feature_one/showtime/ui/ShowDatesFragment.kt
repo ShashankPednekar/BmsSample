@@ -10,11 +10,14 @@ import com.bookmyshow.feature_one.R
 import com.bookmyshow.feature_one.databinding.FragmentShowDatesBinding
 import com.bookmyshow.feature_one.other.viewBinding
 import com.bookmyshow.feature_one.showtime.adapter.ShowDateAdapter
+import com.bookmyshow.feature_one.showtime.adapter.ShowVenueAdapter
 
 
 class ShowDatesFragment : Fragment() {
-    private lateinit var showDateAdapter: ShowDateAdapter
     private val binding by viewBinding(FragmentShowDatesBinding::bind)
+
+    private lateinit var showDateAdapter: ShowDateAdapter
+    private lateinit var showVenueAdapter: ShowVenueAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class ShowDatesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setShowDatesAdapter()
+        setShowVenueAdapter()
     }
 
     private fun setShowDatesAdapter() {
@@ -40,6 +44,14 @@ class ShowDatesFragment : Fragment() {
         binding.rvDates.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvDates.adapter = showDateAdapter
+    }
+
+    private fun setShowVenueAdapter() {
+        showVenueAdapter = ShowVenueAdapter {
+
+        }
+        binding.rvVenues.layoutManager = LinearLayoutManager(context)
+        binding.rvVenues.adapter = showVenueAdapter
     }
 
     companion object {
