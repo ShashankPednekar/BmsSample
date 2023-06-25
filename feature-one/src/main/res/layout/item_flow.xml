@@ -6,5 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     app:flow_horizontalAlign="start"
+    app:flow_horizontalBias="0.5"
+    app:flow_horizontalGap="3dp"
     app:flow_horizontalStyle="packed"
-    app:flow_wrapMode="chain"/>
+    app:flow_wrapMode="aligned" />
