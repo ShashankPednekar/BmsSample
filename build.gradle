@@ -71,8 +71,14 @@ buildscript {
             picassoOkHttp   : "com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0"
         ]
 
+        nav = "2.5.3"
+        navigation = [
+                ui      : "androidx.navigation:navigation-ui-ktx:${nav}",
+                fragment: "androidx.navigation:navigation-fragment-ktx:${nav}",
+        ]
+
         other = [
-            multidex: 'androidx.multidex:multidex:2.0.0'
+            multidex: 'androidx.multidex:multidex:2.0.0',
         ]
 
         roboelectricVersion = '4.0.2'

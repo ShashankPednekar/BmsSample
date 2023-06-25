@@ -31,6 +31,10 @@ android {
                 "-Xjvm-default=all",
         ]
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -40,6 +44,10 @@ dependencies {
     implementation project(":network")
 
     implementation daggerDep.core
+
+    implementation navigation.ui
+    implementation navigation.fragment
+
     kapt daggerDep.compiler
 
     testImplementation 'junit:junit:4.13.2'
