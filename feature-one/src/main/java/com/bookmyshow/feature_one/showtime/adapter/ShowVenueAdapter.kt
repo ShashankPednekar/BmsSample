@@ -3,15 +3,17 @@ package com.bookmyshow.feature_one.showtime.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintProperties.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bookmyshow.feature_one.data.VenuesItem
+import com.bookmyshow.feature_one.databinding.ItemFlowBinding
 import com.bookmyshow.feature_one.databinding.ItemTimeBinding
 import com.bookmyshow.feature_one.databinding.ItemVenueBinding
 
-class ShowVenueAdapter(val listener: (VenuesItem) -> Unit) :
+class ShowVenueAdapter(val listener: (VenuesItem, Int) -> Unit) :
     RecyclerView.Adapter<ShowVenueAdapter.ShowDateAdapterViewHolder>() {
 
     private var venueList: List<VenuesItem>? = null
@@ -43,15 +45,22 @@ class ShowVenueAdapter(val listener: (VenuesItem) -> Unit) :
         fun bindView(venuesItem: VenuesItem) {
             binding.tvTitle.text = venuesItem.name
 
-            venuesItem.showTimes?.forEach { showtimesItem ->
+            binding.clTiming.removeAllViews()
+
+            val flowBinding = ItemFlowBinding.inflate(LayoutInflater.from(binding.root.context))
+            binding.clTiming.addView(flowBinding.root)
+
+            venuesItem.showTimes?.forEachIndexed { index, showtimesItem ->
                 val timeBinding = ItemTimeBinding.inflate(LayoutInflater.from(binding.root.context))
                 timeBinding.tvTime.text = showtimesItem.showTime
 
-                val view = timeBinding.root
-                view.layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-                view.id = View.generateViewId()
-                binding.root.addView(view)
-                binding.flowTimings.addView(view)
+                val timeView = timeBinding.root
+                timeView.layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+                timeView.id = View.generateViewId()
+                binding.clTiming.addView(timeView)
+                flowBinding.root.addView(timeView)
+
+                timeView.setOnClickListener { listener(venuesItem, index) }
             }
         }
     }

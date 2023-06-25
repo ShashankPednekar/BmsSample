@@ -35,15 +35,17 @@ class FeatureOneViewModel @Inject constructor(
 
                 createVenuesByDates(venues!!)
 
-                _allVenueItems.postValue(venues)
-
                 val firstVenue = venues[0]
+                firstVenue.isSelected = true
+
+                _allVenueItems.postValue(venues!!)
+
                 updateVenueByDate(firstVenue)
             }
         }
     }
 
-    private fun updateVenueByDate(firstVenue: VenuesItem) {
+    fun updateVenueByDate(firstVenue: VenuesItem) {
         _selectedVenueItems.postValue(venuesByDate[firstVenue.showDate])
     }
 

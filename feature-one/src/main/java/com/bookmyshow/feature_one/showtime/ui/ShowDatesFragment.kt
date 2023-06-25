@@ -1,6 +1,7 @@
 package com.bookmyshow.feature_one.showtime.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 
 class ShowDatesFragment : Fragment() {
+    private val TAG = "ShowDatesFragment"
     private val binding by viewBinding(FragmentShowDatesBinding::bind)
 
     private lateinit var showDateAdapter: ShowDateAdapter
@@ -52,7 +54,7 @@ class ShowDatesFragment : Fragment() {
 
     private fun setShowDatesAdapter() {
         showDateAdapter = ShowDateAdapter {
-
+            viewModel.updateVenueByDate(it)
         }
         binding.rvDates.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -60,8 +62,8 @@ class ShowDatesFragment : Fragment() {
     }
 
     private fun setShowVenueAdapter() {
-        showVenueAdapter = ShowVenueAdapter {
-
+        showVenueAdapter = ShowVenueAdapter { venuesItem, pos ->
+            Log.d(TAG, "setShowVenueAdapter: ${venuesItem.name} ${venuesItem.showTimes?.get(pos)}")
         }
         binding.rvVenues.layoutManager = LinearLayoutManager(context)
         binding.rvVenues.adapter = showVenueAdapter
