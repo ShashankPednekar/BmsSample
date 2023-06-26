@@ -9,5 +9,26 @@
         android:id="@+id/showDatesFragment"
         android:name="com.bookmyshow.feature_one.showtime.ui.ShowDatesFragment"
         android:label="fragment_show_dates"
-        tools:layout="@layout/fragment_show_dates" />
+        tools:layout="@layout/fragment_show_dates">
+        <action
+            android:id="@+id/action_to_showTimeDetailsFragment"
+            app:destination="@id/showTimeDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showTimeDetailsFragment"
+        android:name="com.bookmyshow.feature_one.showtime.ui.ShowTimeDetailsFragment"
+        android:label="fragment_show_time_details"
+        tools:layout="@layout/fragment_show_time_details">
+
+        <argument
+            android:name="showDate"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="timePos"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>

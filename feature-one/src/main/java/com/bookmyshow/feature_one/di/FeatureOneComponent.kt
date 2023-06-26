@@ -4,6 +4,7 @@ import com.bookmyshow.common_ui.di.ViewModelBuilderModule
 import com.bookmyshow.core.di.CoreComponent
 import com.bookmyshow.feature_one.FeatureOneActivity
 import com.bookmyshow.feature_one.showtime.ui.ShowDatesFragment
+import com.bookmyshow.feature_one.showtime.ui.ShowTimeDetailsFragment
 import dagger.Component
 
 @Component(
@@ -24,4 +25,6 @@ interface FeatureOneComponent {
     fun inject(activity: FeatureOneActivity)
 
     fun injectShowDatesFragment(showDatesFragment: ShowDatesFragment)
+
+    fun injectShowTimeDetailsFragment(showDatesFragment: ShowTimeDetailsFragment)
 }

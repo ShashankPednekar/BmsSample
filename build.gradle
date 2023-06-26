@@ -75,6 +75,7 @@ buildscript {
         navigation = [
                 ui      : "androidx.navigation:navigation-ui-ktx:${nav}",
                 fragment: "androidx.navigation:navigation-fragment-ktx:${nav}",
+                classpath: "androidx.navigation:navigation-safe-args-gradle-plugin:${nav}",
         ]
 
         other = [
@@ -100,6 +101,7 @@ buildscript {
     dependencies {
         classpath androidDependencies.gradlePlugin
         classpath kotlinDep.gradlePlugin
+        classpath navigation.classpath
     }
 }
 

@@ -2,13 +2,13 @@ package com.bookmyshow.feature_one.showtime.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bookmyshow.feature_one.FeatureOneActivity
 import com.bookmyshow.feature_one.R
 import com.bookmyshow.feature_one.databinding.FragmentShowDatesBinding
 import com.bookmyshow.feature_one.di.FeatureOneDaggerProvider
@@ -19,7 +19,7 @@ import com.bookmyshow.feature_one.viewmodel.FeatureOneViewModel
 import javax.inject.Inject
 
 
-class ShowDatesFragment : Fragment() {
+class ShowDatesFragment : Fragment(R.layout.fragment_show_dates) {
     private val TAG = "ShowDatesFragment"
     private val binding by viewBinding(FragmentShowDatesBinding::bind)
 
@@ -28,18 +28,11 @@ class ShowDatesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: FeatureOneViewModel by viewModels { viewModelFactory }
+    private val viewModel: FeatureOneViewModel by viewModels({ activity as FeatureOneActivity }) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FeatureOneDaggerProvider.component.injectShowDatesFragment(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_show_dates, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +57,13 @@ class ShowDatesFragment : Fragment() {
     private fun setShowVenueAdapter() {
         showVenueAdapter = ShowVenueAdapter { venuesItem, pos ->
             Log.d(TAG, "setShowVenueAdapter: ${venuesItem.name} ${venuesItem.showTimes?.get(pos)}")
+            if (activity != null) {
+                val action = ShowDatesFragmentDirections.actionToShowTimeDetailsFragment(
+                    venuesItem.name,
+                    pos
+                )
+                findNavController().navigate(action)
+            }
         }
         binding.rvVenues.layoutManager = LinearLayoutManager(context)
         binding.rvVenues.adapter = showVenueAdapter
