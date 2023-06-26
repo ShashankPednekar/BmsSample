@@ -59,7 +59,7 @@ class ShowDatesFragment : Fragment(R.layout.fragment_show_dates) {
             Log.d(TAG, "setShowVenueAdapter: ${venuesItem.name} ${venuesItem.showTimes?.get(pos)}")
             if (activity != null) {
                 val action = ShowDatesFragmentDirections.actionToShowTimeDetailsFragment(
-                    venuesItem.name,
+                    venuesItem.name + venuesItem.showDate,
                     pos
                 )
                 findNavController().navigate(action)

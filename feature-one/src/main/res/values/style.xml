@@ -59,6 +59,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="RobotoBold.SizeXXL">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     ---------------------------------------------------
 
     <style name="RobotoLight.SizeS">

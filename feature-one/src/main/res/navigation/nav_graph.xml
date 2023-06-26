@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_show_time_details">
 
         <argument
-            android:name="showDate"
+            android:name="unique"
             android:defaultValue=""
             app:argType="string" />
 
