@@ -12,9 +12,11 @@ import com.bookmyshow.feature_one.data.VenuesItem
 import com.bookmyshow.feature_one.databinding.ItemFlowBinding
 import com.bookmyshow.feature_one.databinding.ItemTimeBinding
 import com.bookmyshow.feature_one.databinding.ItemVenueBinding
+import javax.inject.Inject
 
-class ShowVenueAdapter(val listener: (VenuesItem, Int) -> Unit) :
+class ShowVenueAdapter @Inject constructor() :
     RecyclerView.Adapter<ShowVenueAdapter.ShowDateAdapterViewHolder>() {
+    var listener: ((VenuesItem, Int) -> Unit)? = null
 
     private var venueList: List<VenuesItem>? = null
 
@@ -60,7 +62,7 @@ class ShowVenueAdapter(val listener: (VenuesItem, Int) -> Unit) :
                 binding.clTiming.addView(timeView)
                 flowBinding.root.addView(timeView)
 
-                timeView.setOnClickListener { listener(venuesItem, index) }
+                timeView.setOnClickListener { listener?.invoke(venuesItem, index) }
             }
         }
     }

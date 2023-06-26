@@ -9,9 +9,9 @@ import com.bookmyshow.common_ui.getDayDateMonthFromDate
 import com.bookmyshow.feature_one.data.VenuesItem
 import com.bookmyshow.feature_one.databinding.ItemShowDateBinding
 
-class ShowDateAdapter(val listener: (VenuesItem) -> Unit) :
-    RecyclerView.Adapter<ShowDateAdapter.ShowDateAdapterViewHolder>() {
+class ShowDateAdapter : RecyclerView.Adapter<ShowDateAdapter.ShowDateAdapterViewHolder>() {
     private var venueList: List<VenuesItem>? = null
+    var listener: ((VenuesItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowDateAdapterViewHolder {
         return ShowDateAdapterViewHolder(
@@ -41,7 +41,7 @@ class ShowDateAdapter(val listener: (VenuesItem) -> Unit) :
             binding.llDate.setOnClickListener {
                 if (venueList != null && adapterPosition != NO_POSITION) {
                     val selectedVenue = venueList!![adapterPosition]
-                    listener(selectedVenue)
+                    listener?.invoke(selectedVenue)
 
                     venueList!!.forEach {
                         it.isSelected = it.name == selectedVenue.name

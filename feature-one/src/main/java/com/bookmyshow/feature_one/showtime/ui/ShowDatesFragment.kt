@@ -23,8 +23,11 @@ class ShowDatesFragment : Fragment(R.layout.fragment_show_dates) {
     private val TAG = "ShowDatesFragment"
     private val binding by viewBinding(FragmentShowDatesBinding::bind)
 
-    private lateinit var showDateAdapter: ShowDateAdapter
-    private lateinit var showVenueAdapter: ShowVenueAdapter
+    @Inject
+    lateinit var showDateAdapter: ShowDateAdapter
+
+    @Inject
+    lateinit var showVenueAdapter: ShowVenueAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,7 +49,7 @@ class ShowDatesFragment : Fragment(R.layout.fragment_show_dates) {
     }
 
     private fun setShowDatesAdapter() {
-        showDateAdapter = ShowDateAdapter {
+        showDateAdapter.listener = {
             viewModel.updateVenueByDate(it)
         }
         binding.rvDates.layoutManager =
@@ -55,7 +58,7 @@ class ShowDatesFragment : Fragment(R.layout.fragment_show_dates) {
     }
 
     private fun setShowVenueAdapter() {
-        showVenueAdapter = ShowVenueAdapter { venuesItem, pos ->
+        showVenueAdapter.listener = { venuesItem, pos ->
             Log.d(TAG, "setShowVenueAdapter: ${venuesItem.name} ${venuesItem.showTimes?.get(pos)}")
             if (activity != null) {
                 val action = ShowDatesFragmentDirections.actionToShowTimeDetailsFragment(
